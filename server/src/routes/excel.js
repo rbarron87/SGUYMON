@@ -28,6 +28,68 @@ const upload = multer({
   }
 });
 
+// Ruta para descargar plantilla de tareas
+router.get('/template/tasks', async (req, res) => {
+  try {
+    // Crear plantilla con el formato correcto para tareas
+    const templateData = [
+      {
+        'TAG': 'TAG001',
+        'Nombre': 'Ejemplo de Tarea 1',
+        'Proyecto': 'Nombre del Proyecto',
+        'Tipología': 'Nombre de la Tipología',
+        'Fase': 'Nombre de la Fase',
+        'Etapa': 'Nombre de la Etapa',
+        'Horas Requeridas': 40,
+        'Valor Productivo': 1000000,
+        'Fecha Objetivo': '2024-12-31'
+      },
+      {
+        'TAG': 'TAG002',
+        'Nombre': 'Ejemplo de Tarea 2',
+        'Proyecto': 'Nombre del Proyecto',
+        'Tipología': 'Nombre de la Tipología',
+        'Fase': 'Nombre de la Fase',
+        'Etapa': 'Nombre de la Etapa',
+        'Horas Requeridas': 20,
+        'Valor Productivo': 500000,
+        'Fecha Objetivo': '2024-11-30'
+      }
+    ];
+
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(templateData);
+
+    // Ajustar ancho de columnas
+    const columnWidths = [
+      { wch: 10 }, // TAG
+      { wch: 30 }, // Nombre
+      { wch: 25 }, // Proyecto
+      { wch: 20 }, // Tipología
+      { wch: 15 }, // Fase
+      { wch: 15 }, // Etapa
+      { wch: 15 }, // Horas Requeridas
+      { wch: 15 }, // Valor Productivo
+      { wch: 15 }  // Fecha Objetivo
+    ];
+    worksheet['!cols'] = columnWidths;
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Plantilla Tareas');
+
+    // Configurar headers para descarga
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', 'attachment; filename=plantilla-tareas.xlsx');
+
+    // Escribir el archivo al response
+    const buffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+    res.send(buffer);
+
+  } catch (error) {
+    console.error('Error generando plantilla:', error);
+    res.status(500).json({ error: 'Error generando la plantilla' });
+  }
+});
+
 // Ruta para subir archivo Excel
 router.post('/upload', upload.single('excelFile'), async (req, res) => {
   try {
