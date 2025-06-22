@@ -12,6 +12,7 @@ const designerRoutes = require('./routes/designer');
 const taskRoutes = require('./routes/task');
 const planningRoutes = require('./routes/planning');
 const realProgressRoutes = require('./routes/realProgress');
+const excelRoutes = require('./routes/excel');
 
 // Configuración de manejo de errores no capturados
 process.on('uncaughtException', (error) => {
@@ -56,6 +57,7 @@ app.use('/api/designers', designerRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/planning', planningRoutes);
 app.use('/api/real-progress', realProgressRoutes);
+app.use('/api/excel', excelRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
