@@ -11,6 +11,20 @@ const Fase = require('./fase');
 const Stage = require('./stage');
 const Client = require('./client');
 
+// Import new purchase tracking models
+const Supplier = require('./supplier');
+const GIACode = require('./giaCode');
+const Equipment = require('./equipment');
+const BOM = require('./bom');
+const BOMItem = require('./bomItem');
+const BOMVersion = require('./bomVersion');
+const PurchaseRequest = require('./purchaseRequest');
+const PurchaseRequestItem = require('./purchaseRequestItem');
+const PurchaseOrder = require('./purchaseOrder');
+const PurchaseOrderItem = require('./purchaseOrderItem');
+const SupplierGIA = require('./supplierGIA');
+const StockMovement = require('./stockMovement');
+
 // Initialize models object
 const models = {
   Project,
@@ -21,7 +35,20 @@ const models = {
   Typology,
   Fase,
   Stage,
-  Client
+  Client,
+  // New purchase tracking models
+  Supplier,
+  GIACode,
+  Equipment,
+  BOM,
+  BOMItem,
+  BOMVersion,
+  PurchaseRequest,
+  PurchaseRequestItem,
+  PurchaseOrder,
+  PurchaseOrderItem,
+  SupplierGIA,
+  StockMovement
 };
 
 // Set up associations
